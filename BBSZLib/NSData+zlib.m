@@ -9,7 +9,7 @@ static const uInt CHUNK = 65536;
 
 @implementation NSData (zlib)
 
-- (NSData *)dataByInflatingWithError:(NSError * __autoreleasing *)error
+- (NSData *)bbs_dataByInflatingWithError:(NSError * __autoreleasing *)error
 {
     if (![self length]) return [self copy];
     NSMutableData *outData = [NSMutableData data];
@@ -20,7 +20,7 @@ static const uInt CHUNK = 65536;
     return outData;
 }
 
-- (NSData *)dataByDeflating
+- (NSData *)bbs_dataByDeflating
 {
     if (![self length]) return [self copy];
     NSMutableData *outData = [NSMutableData data];
@@ -113,8 +113,8 @@ static const uInt CHUNK = 65536;
     deflateEnd(&stream);
 }
 
-- (BOOL)writeDeflatedToFile:(NSString *)path
-                      error:(NSError * __autoreleasing *)error
+- (BOOL)bbs_writeDeflatedToFile:(NSString *)path
+                          error:(NSError * __autoreleasing *)error
 {
     NSFileHandle *f = createOrOpenFileAtPath(path, error);
     if (!f) return NO;
@@ -129,8 +129,8 @@ static const uInt CHUNK = 65536;
     return !(error && *error);
 }
 
-- (BOOL)writeInflatedToFile:(NSString *)path
-                      error:(NSError * __autoreleasing *)error
+- (BOOL)bbs_writeInflatedToFile:(NSString *)path
+                          error:(NSError * __autoreleasing *)error
 {
     NSFileHandle *f = createOrOpenFileAtPath(path, error);
     if (!f) return NO;

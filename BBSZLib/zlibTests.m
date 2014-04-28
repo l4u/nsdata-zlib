@@ -51,13 +51,13 @@
         NSData *orig = getRandomBytes(length);
         NSString *deflatedFileName = getTempFilenamePath();
         NSError *error;
-        [orig writeDeflatedToFile:deflatedFileName
-                            error:&error];
+        [orig bbs_writeDeflatedToFile:deflatedFileName
+                                error:&error];
         XCTAssertNil(error, @"%@", error.localizedDescription);
         NSData *deflated = [NSData dataWithContentsOfFile:deflatedFileName];
         NSString *inflatedFileName = getTempFilenamePath();
-        [deflated writeInflatedToFile:inflatedFileName
-                                error:&error];
+        [deflated bbs_writeInflatedToFile:inflatedFileName
+                                    error:&error];
         XCTAssertNil(error, @"%@", error.localizedDescription);
         NSData *inflated = [NSData dataWithContentsOfFile:inflatedFileName];
         XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);
@@ -70,9 +70,9 @@
 {
     @autoreleasepool {
         NSData *orig = getRandomBytes(length);
-        NSData *deflated = [orig dataByDeflating];
+        NSData *deflated = [orig bbs_dataByDeflating];
         NSError *error;
-        NSData *inflated = [deflated dataByInflatingWithError:&error];
+        NSData *inflated = [deflated bbs_dataByInflatingWithError:&error];
         XCTAssertNil(error, @"%@", error.localizedDescription);
         XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);
     }
