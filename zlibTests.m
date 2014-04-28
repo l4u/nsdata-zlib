@@ -53,14 +53,14 @@
         NSError *error;
         [orig writeDeflatedToFile:deflatedFileName
                             error:&error];
-        STAssertNil(error, error.localizedDescription);
+        XCTAssertNil(error, @"%@", error.localizedDescription);
         NSData *deflated = [NSData dataWithContentsOfFile:deflatedFileName];
         NSString *inflatedFileName = getTempFilenamePath();
         [deflated writeInflatedToFile:inflatedFileName
                                 error:&error];
-        STAssertNil(error, error.localizedDescription);
+        XCTAssertNil(error, @"%@", error.localizedDescription);
         NSData *inflated = [NSData dataWithContentsOfFile:inflatedFileName];
-        STAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %d", length);
+        XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);
         deletePath(deflatedFileName);
         deletePath(inflatedFileName);
     }
@@ -73,23 +73,29 @@
         NSData *deflated = [orig dataByDeflating];
         NSError *error;
         NSData *inflated = [deflated dataByInflatingWithError:&error];
-        STAssertNil(error, error.localizedDescription);
-        STAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %d", length);
+        XCTAssertNil(error, @"%@", error.localizedDescription);
+        XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);
     }
 }
 
 static NSString *getTempFilenamePath()
 {
-    static const char *tmpDirPath;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        tmpDirPath = [[[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory
-                                                               inDomains:NSUserDomainMask] lastObject] path] UTF8String];
-    });
-    char *fname = tempnam(tmpDirPath, "zlibTestTemp");
-    NSString *tmpFilePath = [NSString stringWithUTF8String:fname];
-    free(fname);
-    return tmpFilePath;
+    char templateBuf[PATH_MAX];
+    static NSURL *templateURL;
+    if (!templateURL) {
+        NSString *tmpDir = [[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory
+                                                                    inDomains:NSUserDomainMask] lastObject] path];
+        templateURL = [NSURL fileURLWithPathComponents:@[tmpDir, @"zlibTestTemp.XXXXXXXX"]];
+    }
+    [templateURL getFileSystemRepresentation:templateBuf
+                                   maxLength:PATH_MAX];
+    int success = mkstemp(templateBuf);
+    if (success == -1) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"Could not create temp file"
+                                     userInfo:nil];
+    }
+    return [NSString stringWithUTF8String:templateBuf];
 }
 
 static void deletePath(NSString *path)

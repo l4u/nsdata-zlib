@@ -1,9 +1,11 @@
+@import Foundation;
+
 #import <zlib.h>
 
 #import "BBZlibError.h"
 #import "NSData+zlib.h"
 
-static const size_t CHUNK = 65536;
+static const uInt CHUNK = 65536;
 
 @implementation NSData (zlib)
 
