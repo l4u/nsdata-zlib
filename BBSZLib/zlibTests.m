@@ -26,20 +26,29 @@
     [self helperTestDataWithLength:65537];
 }
 
-- (void)testRandom
+- (void)testSmallInMemory
 {
     dispatch_apply(50000, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^(size_t i) {
-                       uint32_t len = getRandInt(65536 * 2 + 2);
+                       uint32_t len = getRandInt(65536 * 2);
                        [self helperTestDataWithLength:len];
-                       NSLog(@"Small i = %zd, len = %.2f KB", i, len / 1024.);
+                       NSLog(@"Small - i = %zd, len = %.2f KiB", i, len / 1024.);
                    });
+
+}
+
+- (void)testLargeInMemory
+{
     dispatch_apply(10000, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^(size_t i) {
                        uint32_t len = getRandInt(50 * 1024 * 1024);
                        [self helperTestDataWithLength:len];
-                       NSLog(@"Large i = %zd, len = %.2f MB", i, len / (1024. * 1024));
+                       NSLog(@"Large - i = %zd, len = %.2f MiB", i, len / (1024. * 1024));
                    });
+}
+
+- (void)testFiles
+{
     for (NSUInteger i = 0; i < 10; i++) {
         [self helperTestFileWithLength:getRandInt(50 * 1024 * 1024)];
     }
