@@ -51,8 +51,6 @@
 				5832E792190EA834001F5AA8 /* BBZlibError.m */,
 				5832E793190EA834001F5AA8 /* NSData+zlib.h */,
 				5832E794190EA834001F5AA8 /* NSData+zlib.m */,
-				5832E795190EA834001F5AA8 /* zlibTests.h */,
-				5832E796190EA834001F5AA8 /* zlibTests.m */,
 			);
 			name = BBSZLib;
 			path = ../BBSZLib;
@@ -97,6 +95,8 @@
 		58B789AF190B09DA00E72B65 /* ZLibTests */ = {
 			isa = PBXGroup;
 			children = (
+				5832E795190EA834001F5AA8 /* zlibTests.h */,
+				5832E796190EA834001F5AA8 /* zlibTests.m */,
 				58B789B0190B09DA00E72B65 /* Supporting Files */,
 			);
 			path = ZLibTests;
