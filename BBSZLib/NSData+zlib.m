@@ -9,7 +9,7 @@ static const uInt CHUNK = 65536;
 
 @implementation NSData (zlib)
 
-- (NSData *)bbs_dataByInflatingWithError:(NSError * __autoreleasing *)error
+- (NSData *)bbs_dataByInflatingWithError:(NSError *__autoreleasing *)error
 {
     if (![self length]) return [self copy];
     NSMutableData *outData = [NSMutableData data];
@@ -31,7 +31,7 @@ static const uInt CHUNK = 65536;
 }
 
 - (BOOL)inflate:(void (^)(NSData *))processBlock
-          error:(NSError * __autoreleasing *)error
+          error:(NSError *__autoreleasing *)error
 {
     z_stream stream;
     stream.zalloc = Z_NULL;
@@ -77,7 +77,6 @@ static const uInt CHUNK = 65536;
     return YES;
 }
 
-
 - (void)deflate:(void (^)(NSData *))processBlock
 {
     z_stream stream;
@@ -114,7 +113,7 @@ static const uInt CHUNK = 65536;
 }
 
 - (BOOL)bbs_writeDeflatedToFile:(NSString *)path
-                          error:(NSError * __autoreleasing *)error
+                          error:(NSError *__autoreleasing *)error
 {
     NSFileHandle *f = createOrOpenFileAtPath(path, error);
     if (!f) return NO;
@@ -130,7 +129,7 @@ static const uInt CHUNK = 65536;
 }
 
 - (BOOL)bbs_writeInflatedToFile:(NSString *)path
-                          error:(NSError * __autoreleasing *)error
+                          error:(NSError *__autoreleasing *)error
 {
     NSFileHandle *f = createOrOpenFileAtPath(path, error);
     if (!f) return NO;
@@ -146,7 +145,7 @@ static const uInt CHUNK = 65536;
     return !(error && *error);
 }
 
-static NSFileHandle *createOrOpenFileAtPath(NSString *path, NSError * __autoreleasing *error)
+static NSFileHandle *createOrOpenFileAtPath(NSString *path, NSError *__autoreleasing *error)
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         BOOL success = [[NSFileManager defaultManager] createFileAtPath:path
