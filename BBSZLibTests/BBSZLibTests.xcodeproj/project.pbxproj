@@ -10,14 +10,14 @@
 		58B789AE190B09DA00E72B65 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B789AD190B09DA00E72B65 /* XCTest.framework */; };
 		58B789B4190B09DA00E72B65 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58B789B2190B09DA00E72B65 /* InfoPlist.strings */; };
 		58CE42B0190C758600004D71 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 58CE42AF190C758600004D71 /* libz.dylib */; };
-		58DD55D7190EB5D000A2C819 /* BBZlibError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5832E792190EA834001F5AA8 /* BBZlibError.m */; };
+		58DD55D7190EB5D000A2C819 /* BBSZlibError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5832E792190EA834001F5AA8 /* BBSZlibError.m */; };
 		58DD55D8190EB5D000A2C819 /* NSData+zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5832E794190EA834001F5AA8 /* NSData+zlib.m */; };
 		58DD55D9190EB5D000A2C819 /* zlibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5832E796190EA834001F5AA8 /* zlibTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5832E791190EA834001F5AA8 /* BBZlibError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBZlibError.h; sourceTree = "<group>"; };
-		5832E792190EA834001F5AA8 /* BBZlibError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBZlibError.m; sourceTree = "<group>"; };
+		5832E791190EA834001F5AA8 /* BBSZlibError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSZlibError.h; sourceTree = "<group>"; };
+		5832E792190EA834001F5AA8 /* BBSZlibError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSZlibError.m; sourceTree = "<group>"; };
 		5832E793190EA834001F5AA8 /* NSData+zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+zlib.h"; sourceTree = "<group>"; };
 		5832E794190EA834001F5AA8 /* NSData+zlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+zlib.m"; sourceTree = "<group>"; };
 		5832E795190EA834001F5AA8 /* zlibTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zlibTests.h; sourceTree = "<group>"; };
@@ -47,8 +47,8 @@
 		5832E790190EA834001F5AA8 /* BBSZLib */ = {
 			isa = PBXGroup;
 			children = (
-				5832E791190EA834001F5AA8 /* BBZlibError.h */,
-				5832E792190EA834001F5AA8 /* BBZlibError.m */,
+				5832E791190EA834001F5AA8 /* BBSZlibError.h */,
+				5832E792190EA834001F5AA8 /* BBSZlibError.m */,
 				5832E793190EA834001F5AA8 /* NSData+zlib.h */,
 				5832E794190EA834001F5AA8 /* NSData+zlib.m */,
 			);
@@ -174,7 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58DD55D7190EB5D000A2C819 /* BBZlibError.m in Sources */,
+				58DD55D7190EB5D000A2C819 /* BBSZlibError.m in Sources */,
 				58DD55D8190EB5D000A2C819 /* NSData+zlib.m in Sources */,
 				58DD55D9190EB5D000A2C819 /* zlibTests.m in Sources */,
 			);

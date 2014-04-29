@@ -2,7 +2,7 @@
 
 #import <zlib.h>
 
-#import "BBZlibError.h"
+#import "BBSZlibError.h"
 #import "NSData+zlib.h"
 
 static const uInt CHUNK = 65536;
@@ -62,9 +62,9 @@ static const uInt CHUNK = 65536;
                 case Z_DATA_ERROR:
                 case Z_MEM_ERROR:
                     inflateEnd(&stream);
-                    if (error) *error = [BBZlibError errorWithDomain:BBZlibErrorDomain
-                                                                code:BBZlibErrorCodeInflationError
-                                                            userInfo:nil];
+                    if (error) *error = [BBSZlibError errorWithDomain:BBSZlibErrorDomain
+                                                                 code:BBSZlibErrorCodeInflationError
+                                                             userInfo:nil];
                     return NO;
             }
             processBlock([NSData dataWithBytesNoCopy:out
@@ -154,8 +154,8 @@ static NSFileHandle *createOrOpenFileAtPath(NSString *path, NSError * __autorele
                                                              attributes:nil];
         if (!success) {
             if (error) {
-                *error = [NSError errorWithDomain:BBZlibErrorDomain
-                                             code:BBZlibErrorCodeCouldNotCreateFileError
+                *error = [NSError errorWithDomain:BBSZlibErrorDomain
+                                             code:BBSZlibErrorCodeCouldNotCreateFileError
                                          userInfo:nil];
             }
             return nil;
