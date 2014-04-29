@@ -62,9 +62,9 @@ static const uInt CHUNK = 65536;
                 case Z_DATA_ERROR:
                 case Z_MEM_ERROR:
                     inflateEnd(&stream);
-                    if (error) *error = [BBSZlibError errorWithDomain:BBSZlibErrorDomain
-                                                                 code:BBSZlibErrorCodeInflationError
-                                                             userInfo:nil];
+                    if (error) *error = [NSError errorWithDomain:BBSZlibErrorDomain
+                                                            code:BBSZlibErrorCodeInflationError
+                                                        userInfo:nil];
                     return NO;
             }
             processBlock([NSData dataWithBytesNoCopy:out
