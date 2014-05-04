@@ -4,7 +4,7 @@
 
 #import "NSData+zlib.h"
 
-static const uInt CHUNK = 65536;
+static const uInt CHUNK_SIZE = 65536;
 
 NSString *const BBSZlibErrorDomain = @"se.bitba.ZlibErrorDomain";
 NSString *const BBSZlibErrorInfoKey = @"zerror";
@@ -55,13 +55,13 @@ NSString *const BBSZlibErrorInfoKey = @"zerror";
     uInt len = (uInt)[self length];
 
     do {
-        stream.avail_in = MIN(CHUNK, len - offset);
+        stream.avail_in = MIN(CHUNK_SIZE, len - offset);
         if (stream.avail_in == 0) break;
         stream.next_in = source + offset;
         offset += stream.avail_in;
         do {
-            Bytef out[CHUNK];
-            stream.avail_out = CHUNK;
+            Bytef out[CHUNK_SIZE];
+            stream.avail_out = CHUNK_SIZE;
             stream.next_out = out;
             ret = inflate(&stream, Z_NO_FLUSH);
             switch (ret) {
@@ -76,7 +76,7 @@ NSString *const BBSZlibErrorInfoKey = @"zerror";
                     return NO;
             }
             processBlock([NSData dataWithBytesNoCopy:out
-                                              length:CHUNK - stream.avail_out
+                                              length:CHUNK_SIZE - stream.avail_out
                                         freeWhenDone:NO]);
         } while (stream.avail_out == 0);
     } while (ret != Z_STREAM_END);
@@ -106,13 +106,13 @@ NSString *const BBSZlibErrorInfoKey = @"zerror";
     int flush;
 
     do {
-        stream.avail_in = MIN(CHUNK, len - offset);
+        stream.avail_in = MIN(CHUNK_SIZE, len - offset);
         stream.next_in = source + offset;
         offset += stream.avail_in;
         flush = offset > len - 1 ? Z_FINISH : Z_NO_FLUSH;
         do {
-            Bytef out[CHUNK];
-            stream.avail_out = CHUNK;
+            Bytef out[CHUNK_SIZE];
+            stream.avail_out = CHUNK_SIZE;
             stream.next_out = out;
             ret = deflate(&stream, flush);
             if (ret == Z_STREAM_ERROR) {
@@ -122,7 +122,7 @@ NSString *const BBSZlibErrorInfoKey = @"zerror";
                 return NO;
             }
             processBlock([NSData dataWithBytesNoCopy:out
-                                              length:CHUNK - stream.avail_out
+                                              length:CHUNK_SIZE - stream.avail_out
                                         freeWhenDone:NO]);
         } while (stream.avail_out == 0);
     } while (flush != Z_FINISH);
