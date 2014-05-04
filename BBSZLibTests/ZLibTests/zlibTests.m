@@ -60,14 +60,18 @@
         NSData *orig = getRandomBytes(length);
         NSString *deflatedFileName = getTempFilenamePath();
         NSError *error;
-        [orig bbs_writeDeflatedToFile:deflatedFileName
-                                error:&error];
+        BOOL success = [orig bbs_writeDeflatedToFile:deflatedFileName
+                                               error:&error];
         XCTAssertNil(error, @"%@", error.localizedDescription);
+        XCTAssertTrue(success, @"Deflation failed");
+
         NSData *deflated = [NSData dataWithContentsOfFile:deflatedFileName];
         NSString *inflatedFileName = getTempFilenamePath();
-        [deflated bbs_writeInflatedToFile:inflatedFileName
-                                    error:&error];
+        success = [deflated bbs_writeInflatedToFile:inflatedFileName
+                                              error:&error];
         XCTAssertNil(error, @"%@", error.localizedDescription);
+        XCTAssertTrue(success, @"Inflation failed");
+
         NSData *inflated = [NSData dataWithContentsOfFile:inflatedFileName];
         XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);
         deletePath(deflatedFileName);
@@ -79,8 +83,9 @@
 {
     @autoreleasepool {
         NSData *orig = getRandomBytes(length);
-        NSData *deflated = [orig bbs_dataByDeflating];
         NSError *error;
+        NSData *deflated = [orig bbs_dataByDeflatingWithError:&error];
+        XCTAssertNil(error, @"%@", error.localizedDescription);
         NSData *inflated = [deflated bbs_dataByInflatingWithError:&error];
         XCTAssertNil(error, @"%@", error.localizedDescription);
         XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);

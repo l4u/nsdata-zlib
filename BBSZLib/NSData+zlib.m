@@ -2,10 +2,12 @@
 
 #import <zlib.h>
 
-#import "BBSZlibError.h"
 #import "NSData+zlib.h"
 
 static const uInt CHUNK = 65536;
+
+NSString *const BBSZlibErrorDomain = @"se.bitba.ZlibErrorDomain";
+NSString *const BBSZlibErrorInfoKey = @"zerror";
 
 @implementation NSData (zlib)
 
@@ -20,13 +22,14 @@ static const uInt CHUNK = 65536;
     return outData;
 }
 
-- (NSData *)bbs_dataByDeflating
+- (NSData *)bbs_dataByDeflatingWithError:(NSError *__autoreleasing *)error
 {
     if (![self length]) return [self copy];
     NSMutableData *outData = [NSMutableData data];
     [self deflate:^(NSData *toAppend) {
         [outData appendData:toAppend];
-    }];
+    }
+            error:error];
     return outData;
 }
 
@@ -41,7 +44,12 @@ static const uInt CHUNK = 65536;
     stream.next_in = Z_NULL;
 
     int ret = inflateInit(&stream);
-    NSCAssert(ret == Z_OK, @"Could not init deflate");
+    if (ret != Z_OK) {
+        if (error) *error = [NSError errorWithDomain:BBSZlibErrorDomain
+                                                code:BBSZlibErrorCodeInflationError
+                                            userInfo:@{BBSZlibErrorInfoKey : @(ret)}];
+        return NO;
+    }
     Bytef *source = (Bytef *)[self bytes]; // yay
     uInt offset = 0;
     uInt len = (uInt)[self length];
@@ -56,15 +64,15 @@ static const uInt CHUNK = 65536;
             stream.avail_out = CHUNK;
             stream.next_out = out;
             ret = inflate(&stream, Z_NO_FLUSH);
-            NSCAssert(ret != Z_STREAM_ERROR, @"Error");
             switch (ret) {
                 case Z_NEED_DICT:
                 case Z_DATA_ERROR:
                 case Z_MEM_ERROR:
+                case Z_STREAM_ERROR:
                     inflateEnd(&stream);
                     if (error) *error = [NSError errorWithDomain:BBSZlibErrorDomain
                                                             code:BBSZlibErrorCodeInflationError
-                                                        userInfo:nil];
+                                                        userInfo:@{BBSZlibErrorInfoKey : @(ret)}];
                     return NO;
             }
             processBlock([NSData dataWithBytesNoCopy:out
@@ -77,7 +85,8 @@ static const uInt CHUNK = 65536;
     return YES;
 }
 
-- (void)deflate:(void (^)(NSData *))processBlock
+- (BOOL)deflate:(void (^)(NSData *))processBlock
+          error:(NSError *__autoreleasing *)error
 {
     z_stream stream;
     stream.zalloc = Z_NULL;
@@ -85,7 +94,12 @@ static const uInt CHUNK = 65536;
     stream.opaque = Z_NULL;
 
     int ret = deflateInit(&stream, 9);
-    NSCAssert(ret == Z_OK, @"Could not init deflate");
+    if (ret != Z_OK) {
+        if (error) *error = [NSError errorWithDomain:BBSZlibErrorDomain
+                                                code:BBSZlibErrorCodeDeflationError
+                                            userInfo:@{BBSZlibErrorInfoKey : @(ret)}];
+        return NO;
+    }
     Bytef *source = (Bytef *)[self bytes]; // yay
     uInt offset = 0;
     uInt len = (uInt)[self length];
@@ -101,15 +115,19 @@ static const uInt CHUNK = 65536;
             stream.avail_out = CHUNK;
             stream.next_out = out;
             ret = deflate(&stream, flush);
-            NSAssert(ret != Z_STREAM_ERROR, @"Error");
+            if (ret == Z_STREAM_ERROR) {
+                if (error) *error = [NSError errorWithDomain:BBSZlibErrorDomain
+                                                        code:BBSZlibErrorCodeDeflationError
+                                                    userInfo:@{BBSZlibErrorInfoKey : @(ret)}];
+                return NO;
+            }
             processBlock([NSData dataWithBytesNoCopy:out
                                               length:CHUNK - stream.avail_out
                                         freeWhenDone:NO]);
         } while (stream.avail_out == 0);
-        NSAssert(stream.avail_in == 0, @"Error");
     } while (flush != Z_FINISH);
-    NSAssert(ret == Z_STREAM_END, @"Error");
     deflateEnd(&stream);
+    return YES;
 }
 
 - (BOOL)bbs_writeDeflatedToFile:(NSString *)path
@@ -117,15 +135,18 @@ static const uInt CHUNK = 65536;
 {
     NSFileHandle *f = createOrOpenFileAtPath(path, error);
     if (!f) return NO;
+    BOOL success = YES;
     if ([self length]) {
-        [self deflate:^(NSData *toAppend) {
-            [f writeData:toAppend];
-        }];
+        success = [self deflate:
+                   ^(NSData *toAppend) {
+                       [f writeData:toAppend];
+                   }
+                          error:error];
     } else {
         [f writeData:self];
     }
     [f closeFile];
-    return !(error && *error);
+    return success;
 }
 
 - (BOOL)bbs_writeInflatedToFile:(NSString *)path
@@ -133,16 +154,18 @@ static const uInt CHUNK = 65536;
 {
     NSFileHandle *f = createOrOpenFileAtPath(path, error);
     if (!f) return NO;
+    BOOL success = YES;
     if ([self length]) {
-        [self inflate:^(NSData *toAppend) {
-            [f writeData:toAppend];
-        }
-                error:error];
+        success = [self inflate:
+                   ^(NSData *toAppend) {
+                       [f writeData:toAppend];
+                   }
+                          error:error];
     } else {
         [f writeData:self];
     }
     [f closeFile];
-    return !(error && *error);
+    return success;
 }
 
 static NSFileHandle *createOrOpenFileAtPath(NSString *path, NSError *__autoreleasing *error)
@@ -152,11 +175,9 @@ static NSFileHandle *createOrOpenFileAtPath(NSString *path, NSError *__autorelea
                                                                contents:nil
                                                              attributes:nil];
         if (!success) {
-            if (error) {
-                *error = [NSError errorWithDomain:BBSZlibErrorDomain
-                                             code:BBSZlibErrorCodeCouldNotCreateFileError
-                                         userInfo:nil];
-            }
+            if (error) *error = [NSError errorWithDomain:BBSZlibErrorDomain
+                                                    code:BBSZlibErrorCodeCouldNotCreateFileError
+                                                userInfo:nil];
             return nil;
         }
     }
