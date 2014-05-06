@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		58B789AE190B09DA00E72B65 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B789AD190B09DA00E72B65 /* XCTest.framework */; };
+		5837B95A19197266009DE292 /* NSData+zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5832E794190EA834001F5AA8 /* NSData+zlib.m */; };
+		5837B95B19197266009DE292 /* zlibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5832E796190EA834001F5AA8 /* zlibTests.m */; };
+		5837B95D19197266009DE292 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 58CE42AF190C758600004D71 /* libz.dylib */; };
+		5837B95F19197266009DE292 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58B789B2190B09DA00E72B65 /* InfoPlist.strings */; };
 		58B789B4190B09DA00E72B65 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58B789B2190B09DA00E72B65 /* InfoPlist.strings */; };
 		58CE42B0190C758600004D71 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 58CE42AF190C758600004D71 /* libz.dylib */; };
 		58DD55D8190EB5D000A2C819 /* NSData+zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5832E794190EA834001F5AA8 /* NSData+zlib.m */; };
@@ -19,9 +22,8 @@
 		5832E794190EA834001F5AA8 /* NSData+zlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+zlib.m"; sourceTree = "<group>"; };
 		5832E795190EA834001F5AA8 /* zlibTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zlibTests.h; sourceTree = "<group>"; };
 		5832E796190EA834001F5AA8 /* zlibTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zlibTests.m; sourceTree = "<group>"; };
-		58B78993190B089300E72B65 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		58B789AC190B09DA00E72B65 /* ZLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		58B789AD190B09DA00E72B65 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		5837B96319197266009DE292 /* ZLibTests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZLibTests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58B789AC190B09DA00E72B65 /* ZLibTests Mac OS X.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZLibTests Mac OS X.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58B789B1190B09DA00E72B65 /* ZLibTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZLibTests-Info.plist"; sourceTree = "<group>"; };
 		58B789B3190B09DA00E72B65 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		58B789B7190B09DA00E72B65 /* ZLibTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZLibTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -29,12 +31,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5837B95C19197266009DE292 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5837B95D19197266009DE292 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		58B789A9190B09DA00E72B65 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				58CE42B0190C758600004D71 /* libz.dylib in Frameworks */,
-				58B789AE190B09DA00E72B65 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,7 +73,8 @@
 		58B78991190B089300E72B65 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				58B789AC190B09DA00E72B65 /* ZLibTests.xctest */,
+				58B789AC190B09DA00E72B65 /* ZLibTests Mac OS X.xctest */,
+				5837B96319197266009DE292 /* ZLibTests iOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,8 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				58CE42AF190C758600004D71 /* libz.dylib */,
-				58B78993190B089300E72B65 /* Foundation.framework */,
-				58B789AD190B09DA00E72B65 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -110,9 +118,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B789AB190B09DA00E72B65 /* ZLibTests */ = {
+		5837B95819197266009DE292 /* ZLibTests iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B789B8190B09DA00E72B65 /* Build configuration list for PBXNativeTarget "ZLibTests" */;
+			buildConfigurationList = 5837B96019197266009DE292 /* Build configuration list for PBXNativeTarget "ZLibTests iOS" */;
+			buildPhases = (
+				5837B95919197266009DE292 /* Sources */,
+				5837B95C19197266009DE292 /* Frameworks */,
+				5837B95E19197266009DE292 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ZLibTests iOS";
+			productName = ZLibTests;
+			productReference = 5837B96319197266009DE292 /* ZLibTests iOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		58B789AB190B09DA00E72B65 /* ZLibTests Mac OS X */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58B789B8190B09DA00E72B65 /* Build configuration list for PBXNativeTarget "ZLibTests Mac OS X" */;
 			buildPhases = (
 				58B789A8190B09DA00E72B65 /* Sources */,
 				58B789A9190B09DA00E72B65 /* Frameworks */,
@@ -122,9 +147,9 @@
 			);
 			dependencies = (
 			);
-			name = ZLibTests;
+			name = "ZLibTests Mac OS X";
 			productName = ZLibTests;
-			productReference = 58B789AC190B09DA00E72B65 /* ZLibTests.xctest */;
+			productReference = 58B789AC190B09DA00E72B65 /* ZLibTests Mac OS X.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -148,12 +173,21 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B789AB190B09DA00E72B65 /* ZLibTests */,
+				58B789AB190B09DA00E72B65 /* ZLibTests Mac OS X */,
+				5837B95819197266009DE292 /* ZLibTests iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5837B95E19197266009DE292 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5837B95F19197266009DE292 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		58B789AA190B09DA00E72B65 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -165,6 +199,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5837B95919197266009DE292 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5837B95A19197266009DE292 /* NSData+zlib.m in Sources */,
+				5837B95B19197266009DE292 /* zlibTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		58B789A8190B09DA00E72B65 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -188,6 +231,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5837B96119197266009DE292 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZLibTests/ZLibTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ZLibTests/ZLibTests-Info.plist";
+				PRODUCT_NAME = "ZLibTests iOS";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		5837B96219197266009DE292 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZLibTests/ZLibTests-Prefix.pch";
+				INFOPLIST_FILE = "ZLibTests/ZLibTests-Info.plist";
+				PRODUCT_NAME = "ZLibTests iOS";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		58B7899C190B089300E72B65 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -243,7 +324,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wextra",
@@ -290,6 +370,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -308,7 +389,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SDKROOT = macosx;
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wextra",
@@ -339,6 +419,7 @@
 				);
 				INFOPLIST_FILE = "ZLibTests/ZLibTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -354,6 +435,7 @@
 				GCC_PREFIX_HEADER = "ZLibTests/ZLibTests-Prefix.pch";
 				INFOPLIST_FILE = "ZLibTests/ZLibTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
@@ -361,6 +443,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5837B96019197266009DE292 /* Build configuration list for PBXNativeTarget "ZLibTests iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5837B96119197266009DE292 /* Debug */,
+				5837B96219197266009DE292 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		58B7898B190B089300E72B65 /* Build configuration list for PBXProject "BBSZLibTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -370,7 +461,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B789B8190B09DA00E72B65 /* Build configuration list for PBXNativeTarget "ZLibTests" */ = {
+		58B789B8190B09DA00E72B65 /* Build configuration list for PBXNativeTarget "ZLibTests Mac OS X" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B789B9190B09DA00E72B65 /* Debug */,

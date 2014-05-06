@@ -8,15 +8,15 @@
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
+            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "58B789AB190B09DA00E72B65"
-               BuildableName = "ZLibTests.xctest"
-               BlueprintName = "ZLibTests"
+               BuildableName = "ZLibTests Mac OS X.xctest"
+               BlueprintName = "ZLibTests Mac OS X"
                ReferencedContainer = "container:BBSZLibTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,15 +26,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "58B789AB190B09DA00E72B65"
-               BuildableName = "ZLibTests.xctest"
-               BlueprintName = "ZLibTests"
+               BuildableName = "ZLibTests Mac OS X.xctest"
+               BlueprintName = "ZLibTests Mac OS X"
                ReferencedContainer = "container:BBSZLibTests.xcodeproj">
             </BuildableReference>
          </TestableReference>

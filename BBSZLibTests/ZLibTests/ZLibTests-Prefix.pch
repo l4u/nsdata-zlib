@@ -5,5 +5,10 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+    #import <TargetConditionals.h>
+    #if TARGET_OS_IPHONE
+        @import Foundation;
+    #else
+        @import Cocoa;
+    #endif
 #endif

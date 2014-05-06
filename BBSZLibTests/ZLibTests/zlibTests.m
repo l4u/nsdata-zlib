@@ -28,7 +28,7 @@
 
 - (void)testSmallInMemory
 {
-    dispatch_apply(50000, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+    dispatch_apply(50, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^(size_t i) {
                        uint32_t len = getRandInt(65536 * 2);
                        [self helperTestDataWithLength:len];
@@ -39,7 +39,7 @@
 
 - (void)testLargeInMemory
 {
-    dispatch_apply(10000, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+    dispatch_apply(10, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^(size_t i) {
                        uint32_t len = getRandInt(50 * 1024 * 1024);
                        [self helperTestDataWithLength:len];
@@ -73,7 +73,7 @@
         XCTAssertTrue(success, @"Inflation failed");
 
         NSData *inflated = [NSData dataWithContentsOfFile:inflatedFileName];
-        XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);
+        XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", (unsigned long)length);
         deletePath(deflatedFileName);
         deletePath(inflatedFileName);
     }
@@ -88,7 +88,7 @@
         XCTAssertNil(error, @"%@", error.localizedDescription);
         NSData *inflated = [deflated bbs_dataByInflatingWithError:&error];
         XCTAssertNil(error, @"%@", error.localizedDescription);
-        XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", length);
+        XCTAssertTrue([inflated isEqualToData:orig], @"Mismatch for length: %lu", (unsigned long)length);
     }
 }
 
