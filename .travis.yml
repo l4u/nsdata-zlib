@@ -1,0 +1,5 @@
+language: objective-c
+xcode_project: BBSZLibTests/BBSZLibTests.xcodeproj
+xcode_scheme: 
+  - ZLibTests iOS
+  - ZLibTests Mac OS X
