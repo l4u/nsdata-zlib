@@ -33,6 +33,7 @@ NSString *const BBSZlibErrorInfoKey = @"zerror";
     return outData;
 }
 
+// Adapted from http://www.zlib.net/zpipe.c
 - (BOOL)inflate:(void (^)(NSData *))processBlock
           error:(NSError *__autoreleasing *)error
 {
@@ -85,6 +86,7 @@ NSString *const BBSZlibErrorInfoKey = @"zerror";
     return YES;
 }
 
+// Adapted from http://www.zlib.net/zpipe.c
 - (BOOL)deflate:(void (^)(NSData *))processBlock
           error:(NSError *__autoreleasing *)error
 {
