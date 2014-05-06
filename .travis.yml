@@ -1,5 +1,8 @@
 language: objective-c
 xcode_project: BBSZLibTests/BBSZLibTests.xcodeproj
-xcode_scheme: 
-  - ZLibTests iOS
-  - ZLibTests Mac OS X
+matrix:
+  include:
+    - xcode_scheme: ZLibTests iOS
+      xcode_sdk:    iphonesimulator7.1
+    - xcode_scheme: ZLibTests Mac OS X
+      xcode_sdk:    macosx10.9
