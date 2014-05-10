@@ -1,7 +1,7 @@
 language: objective-c
 xcode_project: BBSZLibTests/BBSZLibTests.xcodeproj
 # Workaround for Travis bug causting Chrome crash on Mac
-before_install: defaults write com.google.Keystone.Agent checkInterval 0
+before_install: sudo /Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/GoogleSoftwareUpdateAgent.app/Contents/Resources/install.py --uninstall
 matrix:
   include:
     - xcode_scheme: ZLibTests iOS
